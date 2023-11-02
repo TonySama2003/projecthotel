@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin-Blog</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/admin-css.css">
+
+</head>
+<body>
+<div class="navbar">
+    <div class="logo">
+        <img src="/images/logo-admin.png" />
+    </div>
+    <ul class="nav flex-column">
+        <li class="nav-item">
+            <a class="nav-link active" href="/rooms/admin/list">Rooms</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/users/admin/list">Users</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Bookings</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/blogs/admin/list">Blog</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        </li>
+    </ul>
+</div>
+<div class="container">
+    <nav aria-label="breadcrumb" class="main-breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/blogs/admin/list">Home</a></li>
+
+            <li class="breadcrumb-item active" aria-current="page">Blog</li>
+        </ol>
+    </nav>
+    <h1>Blog list</h1>
+    <a th:href="@{/blogs/admin/showFormForAdd}" class="btn btn-primary btn-sm mr-5 mb-3">
+        Add Blog
+    </a>
+    <table class="table table-bordered table-striped">
+
+        <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Content</th>
+            <th>Image</th>
+            <th>CreatedDate</th>
+            <th>Author</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="tempBlog : ${blogs}">
+            <td th:text="${tempBlog.id}"></td>
+            <td th:text="${tempBlog.blogTitlel}"></td>
+            <td th:text="${tempBlog.blogContent}"></td>
+            <td>
+                <img th:src="@{'/images/blogImg/'+${tempBlog.blogImg}}" style="width: 150px;height: 150px;border-radius: 3px;">
+            </td>
+
+            <td th:text="${tempBlog.blogCreatedDate}"></td>
+            <td th:text="${tempBlog.blogAuthor}"></td>
+
+            <td>
+                <div>
+                    <a th:href="@{/blogs/admin/showFormForUpdate(blogId=${tempBlog.id})}" class="btn btn-info btn-sm">
+                        Update
+                    </a>
+                </div>
+                <div>
+                    <a th:href="@{/blogs/admin/delete(blogId=${tempBlog.id})}"
+                       class="btn btn-danger btn-sm" onclick="if (!(confirm('Are you sure you want to delete this Blog?')))return false">
+                        Delete
+                    </a>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
